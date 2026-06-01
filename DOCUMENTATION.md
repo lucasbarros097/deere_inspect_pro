@@ -270,19 +270,3 @@ openssl rand -base64 32  # secret key do app
 docker compose -f deployment/docker-compose.yml down
 docker compose -f deployment/docker-compose.yml up -d --build
 ```
-
-### Importante
-
-- Nunca envie o `.env` para o repositório.
-- Não compartilhe sua `SECRET_KEY` ou `POSTGRES_PASSWORD` publicamente.
-- Se quiser usar variáveis diferentes para desenvolvimento e produção, mantenha apenas o `.env.example` no repo e crie arquivos específicos localmente.
-
----
-
-## Próximos passos que eu posso fazer por você
-
-- Gerar um `README-DEV.md` com comandos passo-a-passo e instruções para desenvolvedores.
-- Commitar as alterações restauradas em uma branch e abrir PR com resumo das mudanças.
-- Exportar uma versão em PDF desta documentação pronta para Word.
-
----
