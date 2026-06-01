@@ -205,6 +205,80 @@ Utilitários e armazenamento:
 
 ---
 
+## Variáveis de ambiente e arquivos não versionados
+
+O projeto usa um `.env` local para segredos e configuração de banco de dados; esse arquivo NÃO deve ser comitado.
+
+- O repositório contém `.env.example` como modelo de referência.
+- O arquivo real `.env` está listado em `.gitignore` para não ser enviado ao Git.
+- O banco de dados local do Postgres também é persistido em `deployment/data/postgres` e não deve ser versionado.
+
+### Sobre `.env.example`
+
+O arquivo `.env.example` é um template público que mostra quais variáveis são necessárias para o projeto funcionar. Ele não deve conter dados secretos reais. Use-o apenas como base para criar seu `.env` local.
+
+### Como criar o `.env`
+
+Copie o arquivo de exemplo e preencha seus valores locais:
+
+```bash
+cp .env.example .env
+```
+
+Em seguida, edite `.env` para conter os valores corretos do seu ambiente.
+
+### O que cada variável significa
+
+- `POSTGRES_DB` — nome do banco de dados PostgreSQL usado pelo backend.
+- `POSTGRES_USER` — usuário do banco de dados. No container Postgres padrão, geralmente é `postgres`.
+- `POSTGRES_PASSWORD` — senha do usuário do banco. Deve ser uma senha forte e única.
+- `DATABASE_URL` — URL de conexão do SQLAlchemy/PSYCOPG2 ao Postgres. O formato usado aqui é:
+  `postgresql+psycopg2://<POSTGRES_USER>:<POSTGRES_PASSWORD>@db:5432/<POSTGRES_DB>`
+  Onde `db` é o nome do serviço Postgres do `docker-compose`.
+- `VITE_API_URL` — URL base do backend que o frontend usa para fazer chamadas API.
+  - No ambiente local de containers, o padrão é `http://localhost:8000`.
+- `API_PREFIX` — prefixo de rota da API no backend. No projeto atual, é `/api`.
+- `APP_NAME` — nome do aplicativo usado pelo backend e, se necessário, em logs/metadata.
+- `SECRET_KEY` — chave secreta do aplicativo usada para criptografia/segurança.
+  - Mesmo que o backend atual não use autenticação avançada, a chave é útil para futuras dependências ou lógica de sessão.
+
+### Exemplo de `.env`
+
+```env
+POSTGRES_DB=deere_inspect
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=uma_senha_forte_aqui
+DATABASE_URL=postgresql+psycopg2://postgres:uma_senha_forte_aqui@db:5432/deere_inspect
+VITE_API_URL=http://localhost:8000
+API_PREFIX=/api
+APP_NAME=Deere Inspect API
+SECRET_KEY=uma_chave_secreta_aqui
+```
+
+### Como gerar valores seguros
+
+Use comandos como estes para gerar segredos fortes:
+
+```bash
+openssl rand -base64 24  # senha do Postgres
+openssl rand -base64 32  # secret key do app
+```
+
+### Reiniciando os containers após criar o `.env`
+
+```bash
+docker compose -f deployment/docker-compose.yml down
+docker compose -f deployment/docker-compose.yml up -d --build
+```
+
+### Importante
+
+- Nunca envie o `.env` para o repositório.
+- Não compartilhe sua `SECRET_KEY` ou `POSTGRES_PASSWORD` publicamente.
+- Se quiser usar variáveis diferentes para desenvolvimento e produção, mantenha apenas o `.env.example` no repo e crie arquivos específicos localmente.
+
+---
+
 ## Próximos passos que eu posso fazer por você
 
 - Gerar um `README-DEV.md` com comandos passo-a-passo e instruções para desenvolvedores.
@@ -212,5 +286,3 @@ Utilitários e armazenamento:
 - Exportar uma versão em PDF desta documentação pronta para Word.
 
 ---
-
-Se quiser, eu adiciono este `DOCUMENTATION.md` ao repositório (já adicionado) e posso também commitar em uma branch e empurrar para o origin. Diga qual ação prefere a seguir.

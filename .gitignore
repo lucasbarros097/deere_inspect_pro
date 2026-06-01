@@ -24,3 +24,6 @@ __pycache__/
 .env.local
 .env.*.local
 .env.*.secret
+
+# Local instructions / docs not for repo tracking
+misc/.instructions.md
