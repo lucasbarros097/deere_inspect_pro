@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#367c2b" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/pwa-192x192.png" />
+    <title>Inspec Pro - Equipamentos</title>
+    <meta name="description" content="Sistema de inspeção técnica de equipamentos" />
+    <meta name="author" content="Terraverde" />
+
+    <meta property="og:title" content="Inspec Pro" />
+    <meta property="og:description" content="Sistema de inspeção técnica de equipamentos" />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary" />
+    <style>
+      html, body, #root { background-color: #0f0f0f; }
+    </style>
+    <script>
+      // Apply dark theme class before React hydrates to avoid white flash
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var isDark = stored ? stored === 'dark' : true;
+          if (isDark) document.documentElement.classList.add('dark');
+        } catch (e) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

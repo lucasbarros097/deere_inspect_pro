@@ -1,0 +1,21 @@
+{
+  "name": "Análise Técnica - John Deere",
+  "short_name": "Análise Técnica",
+  "description": "Inspeção técnica de equipamentos linha amarela John Deere",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#367c2b",
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
